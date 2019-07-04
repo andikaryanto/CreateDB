@@ -8,7 +8,7 @@ class migration_20190703063330 {
         $table = new Table();
         $table->table('matapelajaran')
         ->addColumn('Id', 'int', "11", false, null, true, true)
-        ->addColumn('NamaMapel', 'int', "11")
+        ->addColumn('NamaMapel', 'varchar', "100")
         ->create();
 
     }
