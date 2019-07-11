@@ -10,8 +10,8 @@ class migration_20190703063843 {
         $table->table('pengguna')
         ->addColumn('Id', 'int', "11", false, null, true, true)
         ->addColumn('Pengguna', 'varchar', "100")
-        ->addColumn('password','varchar', '50')
-        ->addColumn('level', 'smallint', '11')
+        ->addColumn('Password','varchar', '50')
+        ->addColumn('Level', 'smallint', '11')
         ->create();
     }
 }
