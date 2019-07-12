@@ -28,6 +28,8 @@ class migration_20190702043302 {
         ->addColumn('StatusSekolah','enum', "'Negeri', 'Swasta'", true)
         ->addColumn('KartuMiskin','tinyint', '1', true)
         ->addColumn('Status','tinyint', '1', true)
+        ->addColumn('Tahunajaran_Id', 'int', "11", true)
+        ->addForeignKey('Tahunajaran_Id', 'tahunajaran','Id')
         ->create();
     }
 }

@@ -1157,3 +1157,298 @@ CREATE TABLE `prestasi` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
 ,CONSTRAINT `prestasi_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-04 11:27:20]
 INSERT INTO migrations VALUES(null, '20190703070237', '2019-07-04 16:27:20')  [2019-07-04 11:27:20]
+SELECT count(*) as Count
+        FROM information_schema.TABLES
+        WHERE (TABLE_SCHEMA = 'psb') AND (TABLE_NAME = 'migrations')  [2019-07-12 04:15:14]
+CREATE TABLE `migrations` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Version` Varchar(50) DEFAULT NULL  
+,`ExecutedAt` DATETIME DEFAULT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:14]
+SELECT * FROM migrations  [2019-07-12 04:15:14]
+CREATE TABLE `peserta` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NoDaftar` varchar(20) DEFAULT NULL  
+,`NISN` varchar(50) NOT NULL  
+,`NamaLengkap` varchar(300) NOT NULL  
+,`JenisKelamin` enum('Laki - laki','Perempuan') NOT NULL  
+,`TempatLahir` varchar(100) NOT NULL  
+,`TglLahir` Date NOT NULL  
+,`Agama` enum('Islam','Katolik','Kristen','Hindu','Budha', 'Konghucu') NOT NULL  
+,`Alamat` varchar(1000) NOT NULL  
+,`RT` varchar(5) NOT NULL  
+,`RW` varchar(5) NOT NULL  
+,`Kelurahan` varchar(100) NOT NULL  
+,`Kecamatan` varchar(100) NOT NULL  
+,`KodePos` varchar(10) NOT NULL  
+,`Domisili` varchar(1000) NOT NULL  
+,`NoTelp` varchar(15) NOT NULL  
+,`AsalSekolah` varchar(100) DEFAULT NULL  
+,`AlamatSekolah` varchar(300) DEFAULT NULL  
+,`StatusSekolah` enum('Negeri', 'Swasta') DEFAULT NULL  
+,`KartuMiskin` tinyint(1) DEFAULT NULL  
+,`Status` tinyint(1) DEFAULT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:14]
+INSERT INTO migrations VALUES(null, '20190702043302', '2019-07-12 09:15:14')  [2019-07-12 04:15:14]
+CREATE TABLE `orangtua` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`NamaLengkap` varchar(300) NOT NULL  
+,`Pekerjaan` varchar(300) NOT NULL  
+,`Agama` enum('Islam','Katolik','Kristen','Hindu','Budha', 'Konghucu') NOT NULL  
+,`Alamat` varchar(1000) NOT NULL  
+,`NamaWali` varchar(100) DEFAULT NULL  
+,`PekerjaanWali` varchar(300) DEFAULT NULL  
+,`AlamatWali` varchar(1000) DEFAULT NULL  
+,`RT` varchar(5) NOT NULL  
+,`RW` varchar(5) NOT NULL  
+,`Kelurahan` varchar(100) NOT NULL  
+,`Kecamatan` varchar(100) NOT NULL  
+,`KodePos` varchar(10) NOT NULL  
+,`NoTelp` varchar(15) DEFAULT NULL  
+,PRIMARY KEY ( Id ),KEY `orangtua_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `orangtua_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:14]
+INSERT INTO migrations VALUES(null, '20190703062206', '2019-07-12 09:15:14')  [2019-07-12 04:15:14]
+CREATE TABLE `matapelajaran` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NamaMapel` varchar(100) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:14]
+INSERT INTO migrations VALUES(null, '20190703063330', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+CREATE TABLE `nilaiujian` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`Mapel_Id` int(11) NOT NULL  
+,`Nilai` decimal(18,2) DEFAULT NULL  
+,PRIMARY KEY ( Id ),KEY `nilaiujian_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `nilaiujian_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+,KEY `nilaiujian_Mapel_Id_fk` (`Mapel_Id`)
+,CONSTRAINT `nilaiujian_Mapel_Id_fk` FOREIGN KEY (`Mapel_Id`) REFERENCES `matapelajaran` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:15]
+INSERT INTO migrations VALUES(null, '20190703063405', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+CREATE TABLE `pengguna` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Pengguna` varchar(100) NOT NULL  
+,`Password` varchar(50) NOT NULL  
+,`Level` smallint(11) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:15]
+INSERT INTO migrations VALUES(null, '20190703063843', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+CREATE TABLE `pengaturan` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NamaPengaturan` varchar(100) NOT NULL  
+,`TglMulaiPendafataran` DATETIME NOT NULL  
+,`TglSelesaiPendaftaran` DATETIME NOT NULL  
+,`TglPegumuman` DATETIME NOT NULL  
+,`JumlahDiterima` int(11) NOT NULL  
+,`Aktif` smallint(1) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:15]
+INSERT INTO migrations VALUES(null, '20190703064643', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+INSERT INTO migrations VALUES(null, '20190703064940', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+INSERT INTO migrations VALUES(null, '20190703065111', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+CREATE TABLE `prestasi` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`NamaPrestasi` varchar(100) NOT NULL  
+,`Nilai` decimal(18,2) NOT NULL  
+,PRIMARY KEY ( Id ),KEY `prestasi_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `prestasi_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:15]
+INSERT INTO migrations VALUES(null, '20190703070237', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+CREATE TABLE `prestasi` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Nama` varchar(100) NOT NULL  
+,`Deskripsi` varchar(100) NOT NULL  
+,`Tahun` int(11) NOT NULL  
+,`Aktif` smallint(1) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:15]
+INSERT INTO migrations VALUES(null, '20190712041211', '2019-07-12 09:15:15')  [2019-07-12 04:15:15]
+SELECT count(*) as Count
+        FROM information_schema.TABLES
+        WHERE (TABLE_SCHEMA = 'psb') AND (TABLE_NAME = 'migrations')  [2019-07-12 04:15:46]
+CREATE TABLE `migrations` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Version` Varchar(50) DEFAULT NULL  
+,`ExecutedAt` DATETIME DEFAULT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:46]
+SELECT * FROM migrations  [2019-07-12 04:15:46]
+CREATE TABLE `peserta` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NoDaftar` varchar(20) DEFAULT NULL  
+,`NISN` varchar(50) NOT NULL  
+,`NamaLengkap` varchar(300) NOT NULL  
+,`JenisKelamin` enum('Laki - laki','Perempuan') NOT NULL  
+,`TempatLahir` varchar(100) NOT NULL  
+,`TglLahir` Date NOT NULL  
+,`Agama` enum('Islam','Katolik','Kristen','Hindu','Budha', 'Konghucu') NOT NULL  
+,`Alamat` varchar(1000) NOT NULL  
+,`RT` varchar(5) NOT NULL  
+,`RW` varchar(5) NOT NULL  
+,`Kelurahan` varchar(100) NOT NULL  
+,`Kecamatan` varchar(100) NOT NULL  
+,`KodePos` varchar(10) NOT NULL  
+,`Domisili` varchar(1000) NOT NULL  
+,`NoTelp` varchar(15) NOT NULL  
+,`AsalSekolah` varchar(100) DEFAULT NULL  
+,`AlamatSekolah` varchar(300) DEFAULT NULL  
+,`StatusSekolah` enum('Negeri', 'Swasta') DEFAULT NULL  
+,`KartuMiskin` tinyint(1) DEFAULT NULL  
+,`Status` tinyint(1) DEFAULT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:46]
+INSERT INTO migrations VALUES(null, '20190702043302', '2019-07-12 09:15:46')  [2019-07-12 04:15:46]
+CREATE TABLE `orangtua` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`NamaLengkap` varchar(300) NOT NULL  
+,`Pekerjaan` varchar(300) NOT NULL  
+,`Agama` enum('Islam','Katolik','Kristen','Hindu','Budha', 'Konghucu') NOT NULL  
+,`Alamat` varchar(1000) NOT NULL  
+,`NamaWali` varchar(100) DEFAULT NULL  
+,`PekerjaanWali` varchar(300) DEFAULT NULL  
+,`AlamatWali` varchar(1000) DEFAULT NULL  
+,`RT` varchar(5) NOT NULL  
+,`RW` varchar(5) NOT NULL  
+,`Kelurahan` varchar(100) NOT NULL  
+,`Kecamatan` varchar(100) NOT NULL  
+,`KodePos` varchar(10) NOT NULL  
+,`NoTelp` varchar(15) DEFAULT NULL  
+,PRIMARY KEY ( Id ),KEY `orangtua_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `orangtua_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:46]
+INSERT INTO migrations VALUES(null, '20190703062206', '2019-07-12 09:15:47')  [2019-07-12 04:15:47]
+CREATE TABLE `matapelajaran` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NamaMapel` varchar(100) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:47]
+INSERT INTO migrations VALUES(null, '20190703063330', '2019-07-12 09:15:47')  [2019-07-12 04:15:47]
+CREATE TABLE `nilaiujian` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`Mapel_Id` int(11) NOT NULL  
+,`Nilai` decimal(18,2) DEFAULT NULL  
+,PRIMARY KEY ( Id ),KEY `nilaiujian_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `nilaiujian_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+,KEY `nilaiujian_Mapel_Id_fk` (`Mapel_Id`)
+,CONSTRAINT `nilaiujian_Mapel_Id_fk` FOREIGN KEY (`Mapel_Id`) REFERENCES `matapelajaran` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:47]
+INSERT INTO migrations VALUES(null, '20190703063405', '2019-07-12 09:15:47')  [2019-07-12 04:15:47]
+CREATE TABLE `pengguna` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Pengguna` varchar(100) NOT NULL  
+,`Password` varchar(50) NOT NULL  
+,`Level` smallint(11) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:47]
+INSERT INTO migrations VALUES(null, '20190703063843', '2019-07-12 09:15:47')  [2019-07-12 04:15:47]
+CREATE TABLE `pengaturan` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NamaPengaturan` varchar(100) NOT NULL  
+,`TglMulaiPendafataran` DATETIME NOT NULL  
+,`TglSelesaiPendaftaran` DATETIME NOT NULL  
+,`TglPegumuman` DATETIME NOT NULL  
+,`JumlahDiterima` int(11) NOT NULL  
+,`Aktif` smallint(1) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:47]
+INSERT INTO migrations VALUES(null, '20190703064643', '2019-07-12 09:15:47')  [2019-07-12 04:15:47]
+INSERT INTO migrations VALUES(null, '20190703064940', '2019-07-12 09:15:47')  [2019-07-12 04:15:47]
+INSERT INTO migrations VALUES(null, '20190703065111', '2019-07-12 09:15:47')  [2019-07-12 04:15:47]
+CREATE TABLE `prestasi` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`NamaPrestasi` varchar(100) NOT NULL  
+,`Nilai` decimal(18,2) NOT NULL  
+,PRIMARY KEY ( Id ),KEY `prestasi_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `prestasi_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:47]
+INSERT INTO migrations VALUES(null, '20190703070237', '2019-07-12 09:15:48')  [2019-07-12 04:15:48]
+CREATE TABLE `tahunajaran` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Nama` varchar(100) NOT NULL  
+,`Deskripsi` varchar(100) NOT NULL  
+,`Tahun` int(11) NOT NULL  
+,`Aktif` smallint(1) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 04:15:48]
+INSERT INTO migrations VALUES(null, '20190712041211', '2019-07-12 09:15:48')  [2019-07-12 04:15:48]
+SELECT count(*) as Count
+        FROM information_schema.TABLES
+        WHERE (TABLE_SCHEMA = 'psb') AND (TABLE_NAME = 'migrations')  [2019-07-12 05:25:43]
+CREATE TABLE `migrations` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Version` Varchar(50) DEFAULT NULL  
+,`ExecutedAt` DATETIME DEFAULT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:25:43]
+SELECT * FROM migrations  [2019-07-12 05:25:43]
+SELECT count(*) as Count
+        FROM information_schema.TABLES
+        WHERE (TABLE_SCHEMA = 'psb') AND (TABLE_NAME = 'migrations')  [2019-07-12 05:26:10]
+SELECT * FROM migrations  [2019-07-12 05:26:10]
+CREATE TABLE `tahunajaran` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Nama` varchar(100) NOT NULL  
+,`Deskripsi` varchar(100) NOT NULL  
+,`Tahun` datetime NOT NULL  
+,`Aktif` smallint(1) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:10]
+INSERT INTO migrations VALUES(null, '20190701041211', '2019-07-12 10:26:10')  [2019-07-12 05:26:10]
+CREATE TABLE `peserta` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NoDaftar` varchar(20) DEFAULT NULL  
+,`NISN` varchar(50) NOT NULL  
+,`NamaLengkap` varchar(300) NOT NULL  
+,`JenisKelamin` enum('Laki - laki','Perempuan') NOT NULL  
+,`TempatLahir` varchar(100) NOT NULL  
+,`TglLahir` Date NOT NULL  
+,`Agama` enum('Islam','Katolik','Kristen','Hindu','Budha', 'Konghucu') NOT NULL  
+,`Alamat` varchar(1000) NOT NULL  
+,`RT` varchar(5) NOT NULL  
+,`RW` varchar(5) NOT NULL  
+,`Kelurahan` varchar(100) NOT NULL  
+,`Kecamatan` varchar(100) NOT NULL  
+,`KodePos` varchar(10) NOT NULL  
+,`Domisili` varchar(1000) NOT NULL  
+,`NoTelp` varchar(15) NOT NULL  
+,`AsalSekolah` varchar(100) DEFAULT NULL  
+,`AlamatSekolah` varchar(300) DEFAULT NULL  
+,`StatusSekolah` enum('Negeri', 'Swasta') DEFAULT NULL  
+,`KartuMiskin` tinyint(1) DEFAULT NULL  
+,`Status` tinyint(1) DEFAULT NULL  
+,`Tahunajaran_Id` int(11) DEFAULT NULL  
+,PRIMARY KEY ( Id ),KEY `peserta_Tahunajaran_Id_fk` (`Tahunajaran_Id`)
+,CONSTRAINT `peserta_Tahunajaran_Id_fk` FOREIGN KEY (`Tahunajaran_Id`) REFERENCES `tahunajaran` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:10]
+INSERT INTO migrations VALUES(null, '20190702043302', '2019-07-12 10:26:10')  [2019-07-12 05:26:10]
+CREATE TABLE `orangtua` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`NamaLengkap` varchar(300) NOT NULL  
+,`Pekerjaan` varchar(300) NOT NULL  
+,`Agama` enum('Islam','Katolik','Kristen','Hindu','Budha', 'Konghucu') NOT NULL  
+,`Alamat` varchar(1000) NOT NULL  
+,`NamaWali` varchar(100) DEFAULT NULL  
+,`PekerjaanWali` varchar(300) DEFAULT NULL  
+,`AlamatWali` varchar(1000) DEFAULT NULL  
+,`RT` varchar(5) NOT NULL  
+,`RW` varchar(5) NOT NULL  
+,`Kelurahan` varchar(100) NOT NULL  
+,`Kecamatan` varchar(100) NOT NULL  
+,`KodePos` varchar(10) NOT NULL  
+,`NoTelp` varchar(15) DEFAULT NULL  
+,PRIMARY KEY ( Id ),KEY `orangtua_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `orangtua_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:11]
+INSERT INTO migrations VALUES(null, '20190703062206', '2019-07-12 10:26:11')  [2019-07-12 05:26:11]
+CREATE TABLE `matapelajaran` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NamaMapel` varchar(100) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:11]
+INSERT INTO migrations VALUES(null, '20190703063330', '2019-07-12 10:26:11')  [2019-07-12 05:26:11]
+CREATE TABLE `nilaiujian` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`Mapel_Id` int(11) NOT NULL  
+,`Nilai` decimal(18,2) DEFAULT NULL  
+,PRIMARY KEY ( Id ),KEY `nilaiujian_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `nilaiujian_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+,KEY `nilaiujian_Mapel_Id_fk` (`Mapel_Id`)
+,CONSTRAINT `nilaiujian_Mapel_Id_fk` FOREIGN KEY (`Mapel_Id`) REFERENCES `matapelajaran` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:11]
+INSERT INTO migrations VALUES(null, '20190703063405', '2019-07-12 10:26:11')  [2019-07-12 05:26:11]
+CREATE TABLE `pengguna` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Pengguna` varchar(100) NOT NULL  
+,`Password` varchar(50) NOT NULL  
+,`Level` smallint(11) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:11]
+INSERT INTO migrations VALUES(null, '20190703063843', '2019-07-12 10:26:11')  [2019-07-12 05:26:11]
+CREATE TABLE `pengaturan` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`NamaPengaturan` varchar(100) NOT NULL  
+,`TglMulaiPendafataran` DATETIME NOT NULL  
+,`TglSelesaiPendaftaran` DATETIME NOT NULL  
+,`TglPegumuman` DATETIME NOT NULL  
+,`JumlahDiterima` int(11) NOT NULL  
+,`Aktif` smallint(1) NOT NULL  
+,PRIMARY KEY ( Id ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:11]
+INSERT INTO migrations VALUES(null, '20190703064643', '2019-07-12 10:26:12')  [2019-07-12 05:26:12]
+INSERT INTO migrations VALUES(null, '20190703064940', '2019-07-12 10:26:12')  [2019-07-12 05:26:12]
+INSERT INTO migrations VALUES(null, '20190703065111', '2019-07-12 10:26:12')  [2019-07-12 05:26:12]
+CREATE TABLE `prestasi` ( `Id` int(11) NOT NULL  AUTO_INCREMENT
+,`Peserta_Id` int(11) NOT NULL  
+,`NamaPrestasi` varchar(100) NOT NULL  
+,`Nilai` decimal(18,2) NOT NULL  
+,PRIMARY KEY ( Id ),KEY `prestasi_Peserta_Id_fk` (`Peserta_Id`)
+,CONSTRAINT `prestasi_Peserta_Id_fk` FOREIGN KEY (`Peserta_Id`) REFERENCES `peserta` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8  [2019-07-12 05:26:12]
+INSERT INTO migrations VALUES(null, '20190703070237', '2019-07-12 10:26:12')  [2019-07-12 05:26:12]

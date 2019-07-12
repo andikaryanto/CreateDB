@@ -10,9 +10,10 @@ class migration_20190703064643 {
         $table->table('pengaturan')
         ->addColumn('Id', 'int', "11", false, null, true, true)
         ->addColumn('NamaPengaturan', 'varchar', "100")
-        ->addColumn('TglMulaiPendafataran','DATETIME', '')
+        ->addColumn('TglMulaiPendaftaran','DATETIME', '')
         ->addColumn('TglSelesaiPendaftaran','DATETIME', '')
-        ->addColumn('TglPegumuman','DATETIME', '')
+        ->addColumn('TglPengumuman','DATETIME', '')
+        ->addColumn('JumlahDiterima','int', '11')
         ->addColumn('Aktif', 'smallint', '1')
         ->create();
     }
